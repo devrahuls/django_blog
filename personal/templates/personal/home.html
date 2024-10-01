@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h1>Registered Users</h1>
+    {% comment %} {% include 'personal/snippets/body_snippets.html' %} {% endcomment %}
+
+    {% comment %} {{a_cool_variable}}
+    {{nice_variable}}
+
+    {% for list_item in list_of_vars %}
+        <p>{{list_item}}</p>
+    {% endfor %} {% endcomment %}
+
+    {% for account in accounts %}
+        {% comment %} {% include 'personal/snippets/body_snippets.html' with value=question %}  {% endcomment %}
+        {% comment %} Printing all the list_item from the body_snippet by passing the value in body_snippet that stores all the list_item {% endcomment %}
+        <p> {{account.username}} || {{account.email}} || {{account.date_joined}} <p/>
+    {% endfor %}
+</div>
+{% endblock content %}
