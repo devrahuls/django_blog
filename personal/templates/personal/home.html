@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>
-    <h1>Registered Users</h1>
+    {% comment %} <h1>Registered Users</h1> {% endcomment %}
     {% comment %} {% include 'personal/snippets/body_snippets.html' %} {% endcomment %}
 
     {% comment %} {{a_cool_variable}}
@@ -10,11 +10,25 @@
     {% for list_item in list_of_vars %}
         <p>{{list_item}}</p>
     {% endfor %} {% endcomment %}
-
-    {% for account in accounts %}
-        {% comment %} {% include 'personal/snippets/body_snippets.html' with value=question %}  {% endcomment %}
-        {% comment %} Printing all the list_item from the body_snippet by passing the value in body_snippet that stores all the list_item {% endcomment %}
-        <p> {{account.username}} || {{account.email}} || {{account.date_joined}} <p/>
-    {% endfor %}
+    
 </div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Rahul Blog</h1>
+    <p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful 
+    framework and you'll see why in this course.</p>
+  </div>
+  <hr>
+  <div class="container">
+      <div class="d-flex flex-column">
+          <div class="">
+              <h4>Registered users:</h1>
+                {% for account in accounts %}
+                {% comment %} {% include 'personal/snippets/body_snippets.html' with value=question %}  {% endcomment %}
+                {% comment %} Printing all the list_item from the body_snippet by passing the value in body_snippet that stores all the list_item {% endcomment %}
+                <p> {{account.username}} || {{account.email}} || {{account.date_joined}} <p/>
+            {% endfor %}
+          </div>
+      </div>
+  </div>
 {% endblock content %}
