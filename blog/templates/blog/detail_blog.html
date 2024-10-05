@@ -18,7 +18,8 @@
             <div class="card-body my-2">
                 <h2 class="card-title">{{blog_post.title}}</h2>
                 <p class="card-text">{{blog_post.body | safe}}</p>
-                {% comment %} We use 'safe' because if the user try to parse the html code in the body text, so it prevents user to do this. {% endcomment %}
+                {% comment %} We use 'safe' because if the user try to parse the html code in the body text, so it doesnt prevents 
+                user to do this. Dont use it in the production level. {% endcomment %}
                 {% if blog_post.author == request.user %}
                     <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary">Edit</a>
                 {% endif %}

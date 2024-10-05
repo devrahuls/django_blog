@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import BlogPost
 from blog.forms import CreateBlogPostForm, UpdateBlogPostForm
 from account.models import Account
+from django.db.models import Q
 
 # Create your views here.
 def create_blog_view(request):

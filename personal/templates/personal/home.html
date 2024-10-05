@@ -1,34 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div>
-    {% comment %} <h1>Registered Users</h1> {% endcomment %}
-    {% comment %} {% include 'personal/snippets/body_snippets.html' %} {% endcomment %}
+<style type="text/css">
 
-    {% comment %} {{a_cool_variable}}
-    {{nice_variable}}
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
 
-    {% for list_item in list_of_vars %}
-        <p>{{list_item}}</p>
-    {% endfor %} {% endcomment %}
-    
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+
+	.blog-post-container{
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+
+	.left-column{
+		padding:0px;
+	}
+
+	.right-column{
+		padding:0px;
+	}
+	.lead{
+		font-size: 17px;
+	}
+</style>
+<div class="container">
+	<div class="row">
+
+		<!-- blog feed -->
+		<div class="left-column col-lg-7 offset-lg-1">
+
+            {% comment %} Gets hide on small screen {% endcomment %}
+			<!-- Top 'create post' bar -->
+			<div class="d-lg-none mb-3">
+				<div class="card m-auto d-flex flex-column p-3">
+					<img class="img-fluid d-block m-auto pb-2" src="{% static 'IMG-20210525-WA0031.jpg' %}" width="72" height="72">
+					<p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful 
+	  					framework and you'll see why in this course.</p>
+					<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+				</div>
+			</div>
+			<!-- end Top 'create post' bar -->
+
+            {% comment %} Its populating the blog posts that are being passed from the view. {% endcomment %}
+			<!-- Blog posts-->
+			{% for post in blog_posts %}
+				<div class="blog-post-container">
+					{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+				</div>
+			{% endfor %}
+			<!-- End Blog posts-->
+		</div>
+		<!-- end blog feed -->
+
+
+		<!-- Right 'create post' column  -->
+		<div class="right-column col-lg-3 d-lg-flex d-none flex-column">
+
+			<div class="card create-post-bar d-flex flex-column p-3">
+				<img class="img-fluid d-block m-auto pb-2" src="{% static 'codingwithmitch_logo.png' %}" width="72" height="72">
+				<p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful 
+  					framework and you'll see why in this course.</p>
+				<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+			</div>
+		
+		</div>
+		<!-- end Right 'create post' column  -->
+
+	</div>
 </div>
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Rahul Blog</h1>
-    <p class="lead">In this course you'll learn how to build a simple blog with user registration and blog CRUD functionality. Django is a powerful 
-    framework and you'll see why in this course.</p>
-  </div>
-  <hr>
-  <div class="container">
-      <div class="d-flex flex-column">
-          <div class="">
-              <h4>Registered users:</h1>
-                {% for account in accounts %}
-                {% comment %} {% include 'personal/snippets/body_snippets.html' with value=question %}  {% endcomment %}
-                {% comment %} Printing all the list_item from the body_snippet by passing the value in body_snippet that stores all the list_item {% endcomment %}
-                <p> {{account.username}} || {{account.email}} || {{account.date_joined}} <p/>
-            {% endfor %}
-          </div>
-      </div>
-  </div>
 {% endblock content %}

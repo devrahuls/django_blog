@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from account.models import Account
+from blog.models import BlogPost
+from operator import attrgetter
 
 # Create your views here.
 def home_screen_view(request):
@@ -23,7 +24,8 @@ def home_screen_view(request):
     # questions = Question.objects.all()
     # context['questions'] = questions
 
-    accounts = Account.objects.all()
-    context['accounts'] = accounts
+    #Get all the blog post, and then sort it by the date_updated field in the descending order(reverse=True).
+    blog_posts = sorted(BlogPost.objects.all(), key=attrgetter('date_updated'), reverse=True)
+    context['blog_posts'] = blog_posts
 
     return render(request, 'personal/home.html', context)
