@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style class="text/css">
+    .card{
+        max-width:700px;
+    }
+    .container{
+        padding: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="card m-auto">
+            <img class="card-img-top" src="{{blog_post.image.url}}">
+            <div class="card-body my-2">
+                <h2 class="card-title">{{blog_post.title}}</h2>
+                <p class="card-text">{{blog_post.body | safe}}</p>
+                {% comment %} We use 'safe' because if the user try to parse the html code in the body text, so it prevents user to do this. {% endcomment %}
+                {% if blog_post.author == request.user %}
+                    <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary">Edit</a>
+                {% endif %}
+            </div>
+            <div class="card-footer text-muted">
+                Updated on {{blog_post.date_updated}} by {{blog_post.author}}.
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

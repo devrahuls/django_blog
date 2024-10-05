@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from personal.views import(    
     home_screen_view,
@@ -30,6 +32,7 @@ from account.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_screen_view, name='home'),
+    path('blog/', include('blog.urls', 'blog')), #Means any urls written in blogs.urls will go like this - blog/create or blog/update.
     path('register/', registration_view, name='register'),
     path('logout/', logout_view, name='logout'),
     path('login/', login_view, name='login'),
@@ -55,3 +58,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),
      name='password_reset_complete'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

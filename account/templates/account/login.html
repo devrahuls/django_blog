@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{% load static %}
 {%block content%}
 
 <style type="text/css">
@@ -39,6 +39,9 @@
 
 
 <form method="post" class="form-signin"> {%csrf_token%}
+    <div class = "d-flex flex-column pb-3">
+        <img src="{% static 'IMG-20210525-WA0031.jpg' %}" class="img-fluid mx-auto d-block" alt="Rahuls logo" height="72" width="72"/>
+    </div>
 
     <h1 class="h3 mb-3 font-weight-normal">Login</h1>
 
