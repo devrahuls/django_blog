@@ -1,0 +1,55 @@
+<!-- FILTERED Pagination -->
+<div class="d-flex flex-column m-auto pagination mt-5">
+    <nav aria-label="Page navigation">
+    <ul class="pagination pg-grey justify-content-center">
+        <!-- Previous Page Link -->
+        <!-- Only shows if there are previous pages available -->
+        {% if blog_posts.has_previous %}
+            <li class="page-item">
+                <!-- 
+                    Creates link to previous page
+                    Maintains search query if it exists (q parameter)
+                    blog_posts.previous_page_number gets the previous page number
+                -->
+              <a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ blog_posts.previous_page_number }}">&laquo; Previous</a>
+            </li>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        <!-- Loops through all available pages -->
+        {% for i in blog_posts.paginator.page_range %}
+            {% if blog_posts.number == i %}
+             <!-- Highlights current page with active class -->
+                <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+            {% else %}
+             <!-- Regular page number links -->
+             <!-- Maintains search query if it exists -->
+                <li class="page-item" ><a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Next Page and Last Page Links -->
+        <!-- Only shows if there are more pages ahead -->
+        {% if blog_posts.has_next %}
+        <!-- Next page link -->
+            <li class="page-item">
+                 <!-- 
+                    Creates link to next page
+                    Maintains search query if it exists
+                    blog_posts.next_page_number gets the next page number
+                -->
+              <a class="page-link" href="?{% if query %}q={{query}}&{% endif %}page={{ blog_posts.next_page_number }}">Next</a>
+            </li>
+            <!-- Last page link -->
+            <li class="page-item">
+                <!-- 
+                    Creates link to last page
+                    blog_posts.paginator.num_pages gets total number of pages
+                -->
+              <a class="page-link"  href="?{% if query %}q={{query}}&{% endif %}page={{ blog_posts.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+        {% endif %}
+    </ul>
+    </nav>
+    </div>
+    <!-- end pagination-->
