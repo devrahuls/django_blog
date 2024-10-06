@@ -62,3 +62,19 @@ def edit_blog_view(request, slug):
         )
     context['form'] = form
     return render(request, 'blog/edit_blog.html', context)
+
+def get_blog_queryset(query=None):
+    queryset = []
+    queries = query.split(" ") #Split the query into words. python install 24 => [python, install, 24]
+    for q in queries:
+        posts = BlogPost.objects.filter(
+            # Q lookups, are used to make the query.
+            # icontaines removes the case sensitivity of the query.
+            Q(title__icontains=q) |
+            Q(body__icontains=q)
+        ).distinct() #distinct() removes the duplicate entries from the query set. All of the posts that comes will be unique.
+
+        for post in posts:
+            queryset.append(post)
+
+    return list(set(queryset)) #Return the unique posts that are found by the query.
