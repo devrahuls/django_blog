@@ -28,6 +28,7 @@ from account.views import (
     login_view,
     account_view
 )
+from blog.api.views import api_detail_blog_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,6 +39,8 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('account/', account_view, name='account'),
 
+    #REST API Urls
+    path('api/blog/', include('blog.api.urls', 'blog.api')),
 
     # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
 
