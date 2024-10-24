@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
 
 #2ND STEP
 #THIS IS REQUIRED, WE ALSO HAVE TO CREATE THE USER MANAGER
@@ -52,8 +57,7 @@ class Account(AbstractBaseUser):
 
 
     #WE CAN'T CHANGE THE USERNAME_FIELD & REQUIRED_FIELDS, BECAUSE THEY'RE PRE-DEFINED KEYWORDS.
-    #Basically means, whatever you'll required when you login will put here, like email or username 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email' #By default django uses username to authenticate, here we overwrite it to the email.
     #Fields that are required during registration
     REQUIRED_FIELDS = ['username',]
 
@@ -68,3 +72,9 @@ class Account(AbstractBaseUser):
         return self.is_admin #Means, whoever the admin is, can edit the changes in the Database
     def has_module_perms(self, app_level):
         return True
+    
+#Auth token that goes with every new created account model.
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
